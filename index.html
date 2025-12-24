@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belajar Mandarin: Ni Hao</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f6f0e2;
+            font-family: 'Poppins', sans-serif;
+        }
+        .hanzi-font {
+            font-family: 'Noto Sans SC', sans-serif;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+        .card {
+            background: white;
+            border-bottom: 8px solid #ff8181;
+        }
+        .btn-audio {
+            background-color: #ff8181;
+            box-shadow: 0 4px 15px rgba(255, 129, 129, 0.4);
+        }
+        .btn-audio:hover {
+            transform: scale(1.05);
+            background-color: #ff6b6b;
+        }
+        .btn-audio:active {
+            transform: scale(0.95);
+        }
+        .pinyin-tag {
+            background-color: #fff1f1;
+            color: #ff8181;
+            border: 1px solid #ff8181;
+        }
+        /* Animasi saat suara diputar */
+        .speaking {
+            animation: pulse 1s infinite;
+            color: #ff8181;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <div class="max-w-sm w-full">
+        <div class="card rounded-[2.5rem] p-10 text-center shadow-xl">
+            
+            <span class="pinyin-tag px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest">
+                Salam Dasar
+            </span>
+
+            <div id="hanziText" class="hanzi-font text-8xl font-bold mt-8 mb-4">
+                你好
+            </div>
+
+            <div class="text-3xl font-semibold text-gray-700 mb-2">
+                nǐ hǎo
+            </div>
+
+            <div class="text-gray-400 text-lg mb-10">
+                "Halo / Apa Kabar"
+            </div>
+
+            <div class="relative flex justify-center">
+                <button onclick="speak()" class="btn-audio w-24 h-24 rounded-full flex items-center justify-center transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-white fill-current" viewBox="0 0 24 24">
+                        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <p class="mt-6 text-gray-400 text-xs">Klik tombol merah untuk mendengar</p>
+        </div>
+
+        <div class="mt-8 bg-white/50 p-4 rounded-2xl border border-white">
+            <h3 class="font-bold text-gray-700 text-sm mb-1">Tips Nada:</h3>
+            <p class="text-xs text-gray-500 leading-relaxed">
+                Kedua karakter memiliki <strong>Nada 3 (Turun-Naik)</strong>. Namun, jika dibaca bersamaan, karakter pertama "nǐ" berubah menjadi nada 2 (naik).
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function speak() {
+            const text = "你好";
+            const msg = new SpeechSynthesisUtterance();
+            const hanziElement = document.getElementById('hanziText');
+
+            msg.text = text;
+            msg.lang = 'zh-CN';
+            msg.rate = 0.8; 
+
+            // Efek visual saat berbicara
+            msg.onstart = () => {
+                hanziElement.classList.add('speaking');
+            };
+            msg.onend = () => {
+                hanziElement.classList.remove('speaking');
+            };
+
+            window.speechSynthesis.cancel(); // Hentikan suara sebelumnya jika ada
+            window.speechSynthesis.speak(msg);
+        }
+    </script>
+
+</body>
+</html>
